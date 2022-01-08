@@ -59,19 +59,40 @@ func part2(filename string) int {
 	fileScanner := bufio.NewScanner(readFile)
 	fileScanner.Split(bufio.ScanLines)
 
-	var previous, current, increases int
+	// Sliding window of 3
+	var sw [3]int
+	var cv, ps, i, increases int
 
 	for fileScanner.Scan() {
-		current, err = strconv.Atoi(fileScanner.Text())
+		cv, err = strconv.Atoi(fileScanner.Text())
 		if err != nil {
 			log.Fatal(err)
 		}
-		if previous > 0 {
-			if current > previous {
-				increases++
+
+		// Store current value in next place in the sw array
+		index := i % len(sw)
+		sw[index] = cv
+
+		// Calculate current sum of sw, if this is 3rd number or greater
+		cs := 0
+		if i >= 2 {
+			for _, v := range sw {
+				cs += v
 			}
+
+			// If previous sum is registered, and current sum is higher, increment increases
+			if ps > 0 {
+				if cs > ps {
+					increases++
+				}
+			}
+
+			ps = cs
+
 		}
-		previous = current
+
+		i++
+
 	}
 
 	return increases
