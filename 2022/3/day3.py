@@ -6,7 +6,7 @@ file_name = 'input.txt'
 with open(file_name) as f:
     lines = f.read().splitlines()
 
-prio_sum = 0
+one_sum = 0
 
 for line in lines:
     split = int(line.__len__() / 2)
@@ -19,13 +19,31 @@ for line in lines:
             else:
                 prio = ord(char) - 96
             print(f"{char}: {prio}")
-            prio_sum += prio
+            one_sum += prio
             break
 
-print(prio_sum)
+print(f"Part One: {one_sum}\n")
 
 # Answer: 7763
 
 
 ## Part Two
 
+two_sum = 0
+
+i = 0
+while(i < len(lines)):
+    group = lines[i:i+3]
+    # print(group)
+    for char in group[0]:
+        if (char in group[1] and char in group[2]):
+            if char.isupper():
+                prio = ord(char) - 38
+            else:
+                prio = ord(char) - 96
+            print(f"{char}: {prio}")
+            two_sum += prio
+            break
+    i += 3
+
+print(f"Part Two: {two_sum}\n")
