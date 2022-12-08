@@ -6,9 +6,9 @@ def read_input(file):
         return f.read()
 
 
-def file_list(lines):
+def dir_rel_size(lines):
     path = []
-    file_list = {}
+    rel_size = {}
     for i, v in enumerate(lines):
         tokens = v.split()
         print(tokens)
@@ -24,15 +24,19 @@ def file_list(lines):
                 else:
                     path.append(tokens[2])
                 print(f"path: {path}")
-                pwd = "/%s" % '/'.join(path)
             if cmd == 'ls':
                 continue  # any line not changing directory, is an ls output
         else:
             if not tokens[0] == 'dir':
-                file = "{pwd}/{tokens[1]}"
+                path_str = "/%s" % '/'.join(path)
                 size = int(tokens[0])
-                print(f"file: {file}, size: {size}")
-    return file_list
+                name = tokens[1]
+                if path_str in rel_size.keys():
+                    rel_size[path_str] += size
+                else:
+                    rel_size[path_str] = size
+                print(f"path: {path_str}, name: {name}, size: {size}, sum: {rel_size[path_str]}")
+    return rel_size
 
 
 def dir_tot_size(rel_size):
@@ -49,20 +53,20 @@ def dir_tot_size(rel_size):
 
 def solve(input):
     lines = input.splitlines()
-    file_list = file_list(lines)
+    rel_size = dir_rel_size(lines)
     # print(f"rel_size: {rel_size}")
-    # tot_size = dir_tot_size(rel_size)
+    tot_size = dir_tot_size(rel_size)
     # print(f"tot_size: {tot_size}")
 
     # sum of dir size <= 100000
-    # result = 0
-    # for i, (k, v) in enumerate(tot_size.items()):
-    #     if v <= 100000:
-    #         # print(f"{k}, size: {v}")
-            # result += v
+    result = 0
+    for i, (k, v) in enumerate(tot_size.items()):
+        if v <= 100000:
+            # print(f"{k}, size: {v}")
+            result += v
         # else:
         #     print(f"{k}, size: {v}")
-    # return result
+    return result
 
 
 def main():
