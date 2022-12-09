@@ -23,12 +23,12 @@ def get_dir_size(lines):
                     pwd = os.path.join(pwd, rel_dir)
                 if pwd not in dir_size.keys():
                     dir_size[pwd] = 0
-                print(pwd)
+                # print(pwd)
         else:
             if not tokens[0] == 'dir':
                 file = os.path.join(pwd, tokens[1])
                 size = int(tokens[0])
-                print(f"file: {file}, size: {size}")
+                # print(f"file: {file}, size: {size}")
                 dir_size[pwd] += size
     return dir_size
 
@@ -46,27 +46,30 @@ def get_dir_tot_size(dir_size):
 
 
 def solve(input):
+    print()
     lines = input.splitlines()
     dir_size = get_dir_size(lines)
-    print(f"dir_size: {dir_size}")
+    # print(f"dir_size: {dir_size}")
     tot_size = get_dir_tot_size(dir_size)
     print(f"tot_size: {tot_size}")
+    # tot_size_sorted = sorted(tot_size.items(), key=lambda x: x[1], reverse=True)
+    sizes_sorted = sorted(tot_size.values())
 
-    # sum of dir size <= 100000
-    result = 0
-    for i, (k, v) in enumerate(tot_size.items()):
-        if v <= 100000:
-            # print(f"{k}, size: {v}")
-            result += v
-        else:
-            print(f"{k}, size: {v}")
-    return result
+    capacity = 70000000
+    need = 30000000
+    used = tot_size['/']
+    free = capacity - used
+
+    for dir_size in sizes_sorted:
+        if dir_size > (need - free):
+            return dir_size
+    return 0
 
 
 def main():
     input = read_input('input.txt')
     print(solve(input))
-    # 1501149
+    #
 
 
 if __name__ == '__main__':
