@@ -6,7 +6,7 @@ def read_input(file):
         return f.read()
 
 
-def populate_tress(lines):
+def populate_trees(lines):
     trees = [0] * len(lines)
     for i, line in enumerate(lines):
         # print(f"{i}: {line}")
@@ -31,7 +31,7 @@ def scenic_val(y, x, input):
     lines = input.splitlines()
     # print(lines)
 
-    trees = populate_tress(lines)
+    trees = populate_trees(lines)
     width = len(trees[0])
     height = len(trees)
     # print(trees)
@@ -61,7 +61,7 @@ def scenic_val(y, x, input):
 def main():
     input = read_input('input.txt')
     lines = input.splitlines()  # ugly duplication
-    # trees = populate_tress(lines)  # ugly duplication
+    # trees = populate_trees(lines)  # ugly duplication
 
     scenic_high = 0
     for y, line in enumerate(lines):
