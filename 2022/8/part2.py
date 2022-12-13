@@ -1,6 +1,3 @@
-import os.path
-
-
 def read_input(file):
     with open(file) as f:
         return f.read()
@@ -71,6 +68,7 @@ def main():
             if scenic > scenic_high:
                 scenic_high = scenic
     print(scenic_high)
+
 
 if __name__ == '__main__':
     main()
