@@ -36,19 +36,24 @@ class TestElevationChange(unittest.TestCase):
         self.assertEqual(part.elevation_change(self.frm, self.to), self.expected)
 
 
-@parameterized_class(('y', 'x', 'expected'), [
-    (0, 0, {'d', 'r'}),  # wraps around array?!
-    (1, 7, {'u', 'd'}),
-    (4, 3, {'l', 'r'}),
-    (4, 7, {'l', 'u'}),
+@parameterized_class(('yx', 'expected'), [
+    ([0, 0], {'d', 'r'}),
+    ([1, 7], {'u', 'd'}),
+    ([4, 3], {'l', 'r'}),
+    ([4, 7], {'l', 'u'}),
 ])
 class TestPossibleMoves(unittest.TestCase):
     def test_possible_moves(self):
-        self.assertSetEqual(part.possible_moves(self.y, self.x), self.expected)
+        self.assertSetEqual(set(part.get_possible_moves(self.yx).keys()), self.expected)
+
+
+class TestFewestMoves(unittest.TestCase):
+    def test_fewest_moves(self):
+        self.assertEqual(part.move(), 31)
 
 
 # known locs(?)
-# [x,y] min_moves
+# [x,y] shortest path as concat direction string?
 
 
 if __name__ == '__main__':
