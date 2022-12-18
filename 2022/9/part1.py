@@ -1,7 +1,4 @@
 from sys import exit
-# import os
-# import time
-# from itertools import pairwise
 
 
 def main(input):
