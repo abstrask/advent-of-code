@@ -27,7 +27,7 @@ U 20
 
 @parameterized_class(('input', 'expected'), [
     (input1, 1),
-    # (input2, 36),
+    (input2, 36),
 ])
 class TestNumVisits(unittest.TestCase):
     def test_num_visits(self):

@@ -1,17 +1,20 @@
+import os
 from sys import exit
 from itertools import chain
+from time import sleep
 
 
 def main(input):
     global rope
     rope = {}
+    global num_tails
     num_tails = 9
     for i in range(num_tails+1):
         rope[i] = [[0, 0]]
     for line in input.splitlines():
         direction, moves = line.split()
         move_head(direction, int(moves))
-    print_rope()
+    # print_rope()
     tail_pos = []
     for pos in rope[num_tails]:
         tail_pos.append("%s,%s" % (pos[0], pos[1]))
@@ -32,8 +35,6 @@ def move_head(direction: str, moves: int):
     last = rope[0][-1]
     x = last[0]
     y = last[1]
-    x = 0
-    y = 0
     for _ in range(moves):
         match direction:
             case 'U':
@@ -71,8 +72,8 @@ def move_tail():
         if max([abs(x_diff), abs(y_diff)]) > 1:
             x += sign(x_diff)
             y += sign(y_diff)
-            # print(f"New:  {x}, {y}")
-            rope[i].append([x, y])
+        # print(f"New:  {x}, {y}")
+        rope[i].append([x, y])
     return
 
 
@@ -108,30 +109,42 @@ def get_bounds():
     return bounds
 
 
-def print_rope():
-
-    # Init grid
-    bounds = get_bounds()
+def reset_grid(bounds):
     grid = []
     x_count = bounds['x_high']-bounds['x_low']+1
     y_count = bounds['y_high']-bounds['y_low']+1
     for _ in range(y_count):
         grid.append(['.']*x_count)
     grid[0 - bounds['y_low']][0 - bounds['x_low']] = 's'
+    return grid
+
+
+def print_rope():
+
+    bounds = get_bounds()
 
     # Update grid with rope
-    for k, item in sorted(rope.items(), reverse=True):
-        if k == 0:
-            c = 'H'
-        else:
-            c = str(k)
-        y, x = item[-1]  # last coord
-        grid[y - bounds['y_low']][x - bounds['x_low']] = c
+    for i, _ in enumerate(rope[0]):
 
-    # Print grid
-    print()
-    for line in reversed(grid):
-        print(''.join(line))
+        grid = reset_grid(bounds)
+
+        for k, item in sorted(rope.items(), reverse=True):
+            if k == 0:
+                c = 'H'
+            else:
+                c = str(k)
+            x, y = item[i]  # last coord
+            grid[y - bounds['y_low']][x - bounds['x_low']] = c
+
+        sleep(0.1)
+
+        # Print grid
+        # os.system('clear')
+        print()
+        for line in reversed(grid):
+            print(''.join(line))
+
+    sleep(3)
     return
 
 
