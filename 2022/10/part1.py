@@ -20,8 +20,6 @@ def main(input):
         print(cycles[i-1])
         sum += cycles[i-1].sig
     return sum
-    # 14680 - too high
-    # 14678 - guess (based off 220th cmd), too high
 
 
 def calc_sig_strength(input):
@@ -37,24 +35,18 @@ def calc_sig_strength(input):
             num_cycles = 2
 
         for i in range(num_cycles):
+            cmdline = line
+            sig = c * x
+            cycles.append(Cycle(c, x, sig, cmdline))
+            # print(cycles[-1])
             if cmd == 'addx':
-                arg = int(line.split()[1])
                 if i == 0:
                     cmdline = "({})".format(line)
                 else:
-                    cmdline = line
+                    arg = int(line.split()[1])
                     x += arg
-            else:
-                cmdline = line
-            sig = c * x
-            cycles.append(Cycle(c, x, sig, cmdline))
-            print(cycles[-1])
             c += 1
-    print()
     return cycles
-    # currently returns the register value of one cycle AHEAD
-    # i.e. cycle 220 should return what is currently returned by cycle 219
-    # this exact error cause all but last test to fail
 
 if __name__ == '__main__':
     with open('input.txt') as f:

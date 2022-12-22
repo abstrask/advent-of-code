@@ -158,12 +158,8 @@ noop
 '''
 
 
-# print(part.main(input2))
-
-
 @parameterized_class(('input', 'expected'), [
     (input1, -1),
-    # (input2, 13140),
 ])
 class TestLastSigStrength(unittest.TestCase):
     def test_last_sig_strength(self):
@@ -171,13 +167,12 @@ class TestLastSigStrength(unittest.TestCase):
 
 
 @parameterized_class(('input', 'cycle', 'expected'), [
-    # (input1, 1),
     (input2, 20, 420),
     (input2, 60, 1140),
     (input2, 100, 1800),
     (input2, 140, 2940),
     (input2, 180, 2880),
-    (input2, 220, 4180),
+    (input2, 220, 3960),
 ])
 class TestCycleSigStrength(unittest.TestCase):
     def test_cycle_sig_strength(self):
@@ -185,7 +180,6 @@ class TestCycleSigStrength(unittest.TestCase):
 
 
 @parameterized_class(('input', 'expected'), [
-    # (input1, 1),
     (input2, 13140),
 ])
 class TestSumSigStrength(unittest.TestCase):
