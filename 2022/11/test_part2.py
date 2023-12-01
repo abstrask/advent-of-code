@@ -33,7 +33,7 @@ Monkey 3:
 '''
 
 
-part.main(input)
+# part.main(input)
 
 
 # class TestMostActiveProduct(unittest.TestCase):
@@ -56,9 +56,16 @@ class TestCrossSum(unittest.TestCase):
 ])
 class TestReduce13(unittest.TestCase):
     def test_reduce_13(self):
-        self.assertEqual(part.reduce13(self.input) % 13 == 0, self.expected)
-    def test_reduce_div_13(self):
         self.assertEqual(part.reduce_div(self.input, 13) % 13 == 0, self.expected)
+
+
+@parameterized_class(('input', 'expected'), [
+    (pow(17, 5), True),
+    (pow(17, 5) + 3, False),
+])
+class TestReduce17(unittest.TestCase):
+    def test_reduce_17(self):
+        self.assertEqual(part.reduce_div(self.input, 17) % 17 == 0, self.expected)
 
 
 @parameterized_class(('input', 'expected'), [
@@ -67,7 +74,7 @@ class TestReduce13(unittest.TestCase):
 ])
 class TestReduce19(unittest.TestCase):
     def test_reduce_19(self):
-        self.assertEqual(part.reduce19(self.input) % 19 == 0, self.expected)
+        self.assertEqual(part.reduce_div(self.input, 19) % 19 == 0, self.expected)
 
 
 @parameterized_class(('input', 'expected'), [
@@ -76,7 +83,7 @@ class TestReduce19(unittest.TestCase):
 ])
 class TestReduce23(unittest.TestCase):
     def test_reduce_23(self):
-        self.assertEqual(part.reduce23(self.input) % 23 == 0, self.expected)
+        self.assertEqual(part.reduce_div(self.input, 23) % 23 == 0, self.expected)
 
 
 # @parameterized_class(('input', 'expected'), [

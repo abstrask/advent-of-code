@@ -102,13 +102,11 @@ def divisible(x: int, y: int) -> bool:
         # case 11:
 
         case 13:
-            # return gmpy2.is_divisible(x, y)
-            # return reduce13(x) % 13 == 0  # 1, 20 ok
             return reduce_div(x, 13) % 13 == 0  # bad
 
         case 17:
             # return gmpy2.is_divisible(x, y)
-            return reduce17(x) % 17 == 0  # 1 ok, 20 bad
+            # return reduce17(x) % 17 == 0  # 1 ok, 20 bad
             return reduce_div(x, 17) % 17 == 0  # 1 ok, 20 bad
 
         case 18:  # This was a mistake - it isn't even necessary ¯\_(ツ)_/¯
@@ -118,13 +116,9 @@ def divisible(x: int, y: int) -> bool:
                 return False
 
         case 19:
-            # return gmpy2.is_divisible(x, y)
-            # return reduce19(x) % 19 == 0  # 1, 20 ok
             return reduce_div(x, 19) % 19 == 0 # bad
 
         case 23:
-            # return gmpy2.is_divisible(x, y)
-            # return reduce23(x) % 23 == 0  # 1, 20 ok
             return reduce_div(x, 23) % 23 == 0  # bad
 
         case _:
@@ -143,12 +137,8 @@ def crosssum(x: int) -> int:
             return y
 
 
-# WIP
 def reduce_div(x: int, y: int) -> int:
-    a = x
     i = 1
-
-    # print(y)
 
     match y:
         case 13:
@@ -171,53 +161,15 @@ def reduce_div(x: int, y: int) -> int:
             return None
 
     tic = time.perf_counter()
-    while len(str(a)) > (digits + 1):
-        # print(f"{digits=}, {factor=}")
-        b = int(str(a)[-digits:]) * factor  # multiply last digit(s)
-        c = int(str(a)[:-digits])  # get remaining digits
-        a = b + c  # if the sum of the numbers are divisible, so is the original number
+    while len(str(x)) > (digits + 1):
+        a = int(str(x)[-digits:]) * factor  # multiply last digit(s)
+        b = int(str(x)[:-digits])  # get remaining digits
+        x = a + b  # if the sum of the numbers are divisible, so is the original number
         # print(f"{a=}, {b=}, {c=}")
         i += 1
     toc = time.perf_counter()
     # print(f"reduce {y} finished after {toc - tic:0.2f} seconds {i} iterations")
-    return a
-
-
-def reduce13(x: int) -> int:
-    y = x
-    while len(str(y)) > 2:
-        a = int(str(y)[-1:]) * 4  # multiply last two digit with 4
-        b = int(str(y)[:-1])  # get remaining digits
-        y = a + b  # if the sum of the numbers are divisible by 13, so is the original number
-        # print(f"{y=}, {a=}, {b=}")
-    return y
-
-
-def reduce17(x: int) -> int:
-    y = x
-    while len(str(y)) > 2:
-        a = int(str(y)[-1:]) * 5  # multiply last two digit with 5
-        b = int(str(y)[:-1])  # get remaining digits
-        y = a + b  # if the sum of the numbers are divisible by 17, so is the original number
-    return y
-
-
-def reduce19(x: int) -> int:
-    y = x
-    while len(str(y)) > 3:
-        a = int(str(y)[-2:]) * 4  # multiply last two digit with 4
-        b = int(str(y)[:-2])  # get remaining digits
-        y = a + b  # if the sum of the numbers are divisible by 19, so is the original number
-    return y
-
-
-def reduce23(x: int) -> int:
-    y = x
-    while len(str(y)) > 2:
-        a = int(str(y)[-1]) * 7  # multiply last digit with 7
-        b = int(str(y)[:-1])  # get remaining digits
-        y = (a + b)  # if the sum of the numbers are divisible by 23, so is the original number
-    return y
+    return x
 
 
 def calc(input):
