@@ -5,8 +5,8 @@ from aocd.models import Puzzle
 
 
 def calc_a(input):
-    result = '0'
-    return int(result)
+    result = None
+    return result
 
 
 def solve_a(input):
@@ -17,8 +17,8 @@ def solve_a(input):
 
 
 def calc_b(input):
-    result = '0'
-    return int(result)
+    result = None
+    return result
 
 
 def solve_b(input):
