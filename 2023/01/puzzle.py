@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 
-import regex # 're' does not support overlapping matches
+import regex as re # 're' does not support overlapping matches
 from aocd import data, get_day_and_year
 from aocd.models import Puzzle
 
 
 def calc_a(input):
-    m = regex.findall(r'(\d)', input)
+    m = re.findall(r'(\d)', input)
     result = f'{m[0]}{m[-1]}'
     return int(result)
 
@@ -32,7 +32,7 @@ def calc_b(input):
     }
     numbers = '|'.join(replace.keys())
     regex_str = r'(\d|' + numbers + ')'
-    matches = regex.findall(regex_str, input, overlapped=True)
+    matches = re.findall(regex_str, input, overlapped=True)
     digits = ''
     for m in matches:
         if m in replace.keys():
