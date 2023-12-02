@@ -1,46 +1,49 @@
-#!/usr/bin/env python3
-
-from aocd import data, get_day_and_year
+import pytest
+from puzzle import calc_a, solve_a, calc_b, solve_b
+from aocd import get_day_and_year
 from aocd.models import Puzzle
 
 
-def calc_a(input):
-    result = '0'
-    return int(result)
+# Intermediate tests
+
+calc_a_testdata = [
+    ('0', 0)
+]
+@pytest.mark.parametrize('input,expected', calc_a_testdata)
+def test_calc_a(input, expected):
+    assert calc_a(input) == expected
+
+calc_b_testdata = [
+    ('0', 0)
+]
+@pytest.mark.parametrize('input,expected', calc_b_testdata)
+def test_calc_b(input, expected):
+    assert calc_b(input) == expected
 
 
-def solve_a(input):
-    result = 0
-    for line in input.split('\n'):
-        result += calc_a(line)
-    return str(result)
+# Solution tests
 
+day = get_day_and_year()[0]
+year = get_day_and_year()[1]
+p = Puzzle(day=day, year=year)
 
-def calc_b(input):
-    result = '0'
-    return int(result)
+test_a = []
+test_b = []
+for e in p.examples:
+    print(e)
+    if e.answer_a:
+        test_a.append((e.input_data, e.answer_a))
+    if e.answer_b:
+        test_b.append((e.input_data, e.answer_b))
 
+@pytest.mark.parametrize('input,expected', test_a)
+def test_solve_a(input, expected):
+    assert solve_a(input) == expected
 
-def solve_b(input):
-    result = 0
-    for line in input.split('\n'):
-        result += calc_b(line)
-    return str(result)
+# EXAMPLE NOT UPDATED!
+example_b = """0
+0
+0"""
+def test_solve_b():
+    assert solve_b(example_b) == "000"
 
-
-def main():
-    day = get_day_and_year()[0]
-    year = get_day_and_year()[1]
-    p = Puzzle(day=day, year=year)
-
-    result_a = solve_a(data)
-    print(f'Answer A: {result_a}')
-    p.answer_a = result_a
-
-    result_b = solve_b(data)
-    print(f'Answer B: {result_b}')
-    p.answer_b = result_b
-
-
-if __name__ == '__main__':
-    main()
