@@ -1,29 +1,54 @@
 #!/usr/bin/env python3
 
-import re
+import regex # 're' does not support overlapping matches
 from aocd import data, get_day_and_year
 from aocd.models import Puzzle
 
 
 def calc_a(input):
-    m = re.findall(r'(\d)', input)
-    solution = f'{m[0]}{m[-1]}'
-    return int(solution)
+    m = regex.findall(r'(\d)', input)
+    result = f'{m[0]}{m[-1]}'
+    return int(result)
 
 
 def solve_a(input):
-    solution = 0
+    result = 0
     for line in input.split('\n'):
-        solution += calc_a(line)
-    return str(solution)
+        result += calc_a(line)
+    return str(result)
 
 
 def calc_b(input):
-    return
+    replace = {
+        'one': '1',
+        'two': '2',
+        'three': '3',
+        'four': '4',
+        'five': '5',
+        'six': '6',
+        'seven': '7',
+        'eight': '8',
+        'nine': '9'
+    }
+    numbers = '|'.join(replace.keys())
+    regex_str = r'(\d|' + numbers + ')'
+    matches = regex.findall(regex_str, input, overlapped=True)
+    digits = ''
+    for m in matches:
+        if m in replace.keys():
+            digits += replace[m]
+        else:
+            digits += m
+    result = f'{digits[0]}{digits[-1]}'
+    print(f'{result} <- {digits} <- {input}')
+    return int(result)
 
 
 def solve_b(input):
-    pass
+    result = 0
+    for line in input.split('\n'):
+        result += calc_b(line)
+    return str(result)
 
 
 def main():
@@ -32,15 +57,12 @@ def main():
     p = Puzzle(day=day, year=year)
 
     result_a = solve_a(data)
-    print(f'\nAnswer A: {result_a}')
+    print(f'Answer A: {result_a}')
     p.answer_a = result_a
 
-    # result_b = solve_b(data.split('\n'))
-    # print(f'\nAnswer B: {result_b}')
-    # p.answer_b = result_b
-
-    # p.answered_a
-    # p.answered_b
+    result_b = solve_b(data)
+    print(f'Answer B: {result_b}')
+    p.answer_b = result_b
 
 
 if __name__ == '__main__':
