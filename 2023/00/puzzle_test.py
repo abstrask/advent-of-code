@@ -33,28 +33,28 @@ if test_b:
 calc_a_testdata = [
     ('0', 0)
 ]
-@pytest.mark.parametrize('input,expected', calc_a_testdata)
-def test_calc_a(input, expected):
-    assert calc_a(input) == expected
+@pytest.mark.parametrize('test_input,expected', calc_a_testdata)
+def test_calc_a(test_input, expected):
+    assert calc_a(test_input) == expected
 
 calc_b_testdata = [
     ('0', 0)
 ]
-@pytest.mark.parametrize('input,expected', calc_b_testdata)
-def test_calc_b(input, expected):
-    assert calc_b(input) == expected
+@pytest.mark.parametrize('test_input,expected', calc_b_testdata)
+def test_calc_b(test_input, expected):
+    assert calc_b(test_input) == expected
 
 
 # Solution tests
 
-@pytest.mark.parametrize('input,expected', test_a, ids="example")
-def test_solve_a(input, expected):
-    assert solve_a(input) == expected
+@pytest.mark.parametrize('test_input,expected', test_a, ids=["example"])
+def test_solve_a(test_input, expected):
+    assert str(solve_a(test_input)) == expected
 
 # EXAMPLE NOT UPDATED!
 example_b = """0
 0
 0"""
 def test_solve_b():
-    assert solve_b(example_b) == "000"
+    assert solve_b(example_b) == 0
 
