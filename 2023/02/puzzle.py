@@ -54,7 +54,7 @@ def solve_a(input):
         game = calc_a(line)
         if game['possible']:
             result += game['game_id']
-    return str(result)
+    return result
 
 
 def calc_b(input):
@@ -88,7 +88,7 @@ def solve_b(input):
     result = 0
     for line in input.split('\n'):
         result += calc_b(line)
-    return str(result)
+    return result
 
 
 def main():

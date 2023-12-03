@@ -58,7 +58,7 @@ def test_calc_b(input, expected):
 range_a = range(0, len(test_a))
 @pytest.mark.parametrize('input,expected', test_a, ids=range_a)
 def test_solve_a(input, expected):
-    assert solve_a(input) == expected
+    assert str(solve_a(input)) == expected
 
 # EXAMPLE NOT UPDATED!
 example_b = """Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green
@@ -69,4 +69,4 @@ Game 5: 6 red, 1 blue, 3 green; 2 blue, 1 red, 2 green"""
 
 range_b = range(0, len(test_b))
 def test_solve_b():
-    assert solve_b(example_b) == "2286"
+    assert solve_b(example_b) == 2286

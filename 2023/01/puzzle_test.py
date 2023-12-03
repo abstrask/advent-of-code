@@ -47,7 +47,7 @@ for e in p.examples:
 
 @pytest.mark.parametrize('input,expected', test_a)
 def test_solve_a(input, expected):
-    assert solve_a(input) == expected
+    assert str(solve_a(input)) == expected
 
 # EXAMPLE NOT UPDATED!
 example_b = """two1nine
@@ -58,5 +58,5 @@ xtwone3four
 zoneight234
 7pqrstsixteen"""
 def test_solve_b():
-    assert solve_b(example_b) == "281"
+    assert solve_b(example_b) == 281
 
