@@ -1,5 +1,5 @@
 import pytest
-from puzzle import calc_a, solve_a, calc_b, solve_b
+from puzzle import calc_a, solve_a, calc_b, solve_b, find_gears
 from aocd import get_day_and_year
 from aocd.models import Puzzle
 
@@ -42,9 +42,9 @@ calc_a_parts_testdata = [
     ('...$.*....', []),
     ('.664.598..', [664, 598])
 ]
-@pytest.mark.parametrize('input,expected', calc_a_parts_testdata)
-def test_calc_a_parts(input, expected):
-    assert [m['part'] for m in calc_a(input)] == expected
+@pytest.mark.parametrize('test_input,expected', calc_a_parts_testdata)
+def test_calc_a_parts(test_input, expected):
+    assert [m['part'] for m in calc_a(test_input)] == expected
 
 
 calc_a_spans_testdata = [
@@ -59,9 +59,9 @@ calc_a_spans_testdata = [
     ('...$.*....', []),
     ('.664.598..', [(1,4), (5,8)])
 ]
-@pytest.mark.parametrize('input,expected', calc_a_spans_testdata)
-def test_calc_a_spans(input, expected):
-    assert [m['span'] for m in calc_a(input)] == expected
+@pytest.mark.parametrize('test_input,expected', calc_a_spans_testdata)
+def test_calc_a_spans(test_input, expected):
+    assert [m['span'] for m in calc_a(test_input)] == expected
 
 
 calc_a_add_testdata = [
@@ -99,46 +99,94 @@ calc_a_add_testdata = [
         'line':  '.664.598..'
     }, 1262)
 ]
-@pytest.mark.parametrize('input,expected', calc_a_add_testdata)
-def test_calc_a_add(input, expected):
-    assert sum([m['to_add'] for m in calc_a(**input)]) == expected
+@pytest.mark.parametrize('test_input,expected', calc_a_add_testdata)
+def test_calc_a_add(test_input, expected):
+    assert sum([m['to_add'] for m in calc_a(**test_input)]) == expected
 
 
-# calc_a_testdata_adjacent = [
-#     ('467..114..', ['.']),
-#     ('...*......', []),
-#     ('..35..633.', ['..', '..']),
-#     ('......#...', []),
-#     ('617*......', ['*']),
-#     ('.....+.58.', ['..']),
-#     ('..592.....', ['..']),
-#     ('......755.', ['..']),
-#     ('...$.*....', []),
-#     ('.664.598..', [(1,4), (5,8)])
-# ]
-# @pytest.mark.parametrize('input,expected', calc_a_testdata_spans)
-# def test_calc_a_spans(input, expected):
-#     assert [m['span'] for m in calc_a(input)] == expected
+find_gears_testdata = [
+    ({
+        'line_no': 0,
+        'line':  '',
+        'x_offset': 0
+    }, []),
+    ({
+        'line_no': 4,
+        'line':  '617*......',
+        'x_offset': 0
+    }, [(4,3)]),
+    ({
+        'line_no': 8,
+        'line':  '.*...',
+        'x_offset': 4
+    }, [(8,5)])
+]
+@pytest.mark.parametrize('test_input,expected', find_gears_testdata)
+def test_find_gears(test_input, expected):
+    assert find_gears(**test_input) == expected
+
+
+calc_b_testdata = [
+    ({
+        'line_no': 0,
+        'line':  '467..114..',
+        'below': '...*......'
+    }, 467),
+    ({
+        'line_no': 2,
+        'above': '...*......',
+        'line':  '..35..633.',
+        'below': '......#...'
+    }, 668),
+    ({
+        'line_no': 4,
+        'above': '......#...',
+        'line':  '617*......',
+        'below': '.....+.58.'
+    }, 617),
+    ({
+        'line_no': 5,
+        'above': '617*......',
+        'line':  '.....+.58.',
+        'below': '..592.....'
+    }, 0),
+    ({
+        'line_no': 6,
+        'above': '.....+.58.',
+        'line':  '..592.....',
+        'below': '......755.'
+    }, 592),
+    ({
+        'line_no': 7,
+        'above': '..592.....',
+        'line':  '......755.',
+        'below': '...$.*....'
+    }, 755),
+    ({
+        'line_no': 9,
+        'above': '...$.*....',
+        'line':  '.664.598..'
+    }, 1262)
+]
+# @pytest.mark.parametrize('test_input,expected', calc_b_testdata)
+# def test_calc_b(test_input, expected):
+#     assert calc_b(test_input) == expected
 
 
 # calc_b_testdata = [
 #     ('0', 0)
 # ]
-# @pytest.mark.parametrize('input,expected', calc_b_testdata)
-# def test_calc_b(input, expected):
-#     assert calc_b(input) == expected
+# @pytest.mark.parametrize('test_input,expected', calc_b_testdata)
+# def test_calc_b(test_input, expected):
+#     assert calc_b(test_input) == expected
 
 
 # # Solution tests
 
-@pytest.mark.parametrize('input,expected', test_a, ids=['example'])
-def test_solve_a(input, expected):
-    assert str(solve_a(input)) == expected
+@pytest.mark.parametrize('test_input,expected', test_a, ids=['example'])
+def test_solve_a(test_input, expected):
+    assert str(solve_a(test_input)) == expected
 
-# # EXAMPLE NOT UPDATED!
-# example_b = """0
-# 0
-# 0"""
-# def test_solve_b():
-#     assert solve_b(example_b) == "000"
-
+@pytest.mark.parametrize('test_input,expected', test_b, ids=['example'])
+def test_solve_b(test_input, expected):
+    assert str(solve_b(test_input)) == expected
