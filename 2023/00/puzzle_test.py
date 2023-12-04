@@ -51,10 +51,14 @@ def test_calc_b(test_input, expected):
 def test_solve_a(test_input, expected):
     assert str(solve_a(test_input)) == expected
 
+@pytest.mark.parametrize('test_input,expected', test_b, ids=["example"])
+def test_solve_b(test_input, expected):
+    assert str(solve_b(test_input)) == expected
+
 # EXAMPLE NOT UPDATED!
-example_b = """0
-0
-0"""
-def test_solve_b():
-    assert solve_b(example_b) == 0
+# example_b = """0
+# 0
+# 0"""
+# def test_solve_b():
+#     assert solve_b(example_b) == 0
 
