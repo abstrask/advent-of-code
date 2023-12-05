@@ -1,5 +1,5 @@
 import pytest
-from puzzle import calc_a, solve_a, calc_b, solve_b
+from puzzle import solve_a, solve_b, str_to_map, get_dest
 from aocd import get_day_and_year
 from aocd.models import Puzzle
 
@@ -28,33 +28,46 @@ if test_b:
         print(f'Expected B: {t[1]}')
 
 
+
+# PART A
+
 # Intermediate tests
 
-calc_a_testdata = [
-    ('50 98 2', {
-        98: 50,
-        99: 51
+str_to_map_testdata = [
+    ('''50 98 2
+52 50 48''', {
+        98: {'length': 2, 'dest': 50},
+        50: {'length': 48, 'dest': 52}
     }),
-    ('52 50 4', { # length: 4 (should be 48)
-        50: 52,
-        51: 53,
-        52: 54,
-        53: 55
+    ('''0 15 37
+37 52 2
+39 0 15''', {
+        15: {'length': 37, 'dest': 0},
+        52: {'length': 2, 'dest': 37},
+        0: {'length': 15, 'dest': 39}
     })
 ]
-@pytest.mark.parametrize('test_input,expected', calc_a_testdata)
-def test_calc_a(test_input, expected):
-    assert calc_a(test_input) == expected
+@pytest.mark.parametrize('test_input,expected', str_to_map_testdata)
+def test_str_to_map(test_input, expected):
+    assert str_to_map(test_input) == expected
 
-# Could/should have scoped function differently, so they were easier to test :-/
-
-if p.answered_a:
-    calc_b_testdata = [
-        ('0', 0)
-    ]
-    @pytest.mark.parametrize('test_input,expected', calc_b_testdata)
-    def test_calc_b(test_input, expected):
-        assert calc_b(test_input) == expected
+get_dest_testmap = {
+    15: {'length': 37, 'dest': 0},
+    52: {'length': 2, 'dest': 37},
+    0: {'length': 15, 'dest': 39}
+}
+get_dest_testdata = [
+    (15, 0),  # same as key
+    (52, 37), # same as key
+    (23, 8),  # offset
+    (13, 52), # offset
+    (53, 38), # offset
+    (54, 54), # not found, return source
+    (60, 60)  # not found, return source
+]
+@pytest.mark.parametrize('test_input,expected', get_dest_testdata)
+def test_get_dest(test_input, expected):
+    assert get_dest(source=test_input, map=get_dest_testmap) == expected
 
 
 # Solution tests
@@ -63,15 +76,14 @@ if p.answered_a:
 def test_solve_a(test_input, expected):
     assert str(solve_a(test_input)) == expected
 
+
+
+# PART B
+
 if p.answered_a:
+
+    # Solution tests
+
     @pytest.mark.parametrize('test_input,expected', test_b, ids=["example"])
     def test_solve_b(test_input, expected):
         assert str(solve_b(test_input)) == expected
-
-# EXAMPLE NOT UPDATED!
-# example_b = """0
-# 0
-# 0"""
-# def test_solve_b():
-#     assert solve_b(example_b) == 0
-
