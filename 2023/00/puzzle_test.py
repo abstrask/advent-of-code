@@ -47,12 +47,6 @@ def test_calc_a(test_input, expected):
 def test_solve_a(test_input, expected):
     assert str(solve_a(test_input)) == expected
 
-if p.answered_a:
-    @pytest.mark.parametrize('test_input,expected', test_b, ids=["example"])
-    def test_solve_b(test_input, expected):
-        assert str(solve_b(test_input)) == expected
-
-
 
 # PART B
 

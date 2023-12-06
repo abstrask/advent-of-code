@@ -33,15 +33,16 @@ def main():
     year = get_day_and_year()[1]
     p = Puzzle(day=day, year=year)
 
+    result_a = solve_a(data)
+    print(f'Answer A: {result_a}')
     if not p.answered_a:
-        result_a = solve_a(data)
-        print(f'Answer A: {result_a}')
         p.answer_a = result_a
 
-    if not p.answered_b:
+    if p.answered_a:
         result_b = solve_b(data)
         print(f'Answer B: {result_b}')
-        p.answer_b = result_b
+        if not p.answered_b:
+            p.answer_b = result_b
 
 
 if __name__ == '__main__':
