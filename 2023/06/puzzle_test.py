@@ -58,12 +58,6 @@ def test_calc_a(test_input, expected):
 def test_solve_a(test_input, expected):
     assert str(solve_a(test_input)) == '288' # error in 'expected' returned by AOCD
 
-if p.answered_a:
-    @pytest.mark.parametrize('test_input,expected', test_b, ids=["example"])
-    def test_solve_b(test_input, expected):
-        assert str(solve_b(test_input)) == expected
-
-
 
 # PART B
 
@@ -71,12 +65,12 @@ if p.answered_a:
 
     # Intermediate tests
 
-    calc_b_testdata = [
-        ('0', 0)
-    ]
-    @pytest.mark.parametrize('test_input,expected', calc_b_testdata)
-    def test_calc_b(test_input, expected):
-        assert calc_b(test_input) == expected
+    # calc_b_testdata = [
+    #     ('0', 0)
+    # ]
+    # @pytest.mark.parametrize('test_input,expected', calc_b_testdata)
+    # def test_calc_b(test_input, expected):
+    #     assert calc_b(test_input) == expected
 
 
     # Solution tests

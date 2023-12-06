@@ -1,28 +1,40 @@
 #!/usr/bin/env python3
 
 import regex as re
+import matplotlib.pyplot as plt
 from alive_progress import alive_bar
 from aocd import data, get_day_and_year
 from aocd.models import Puzzle
 
 
 def calc_a(max_time: int, dist_to_beat: int):
-    max_times = []
+    # max_times = []
+    wins = 0
+    times = list(range(1, max_time))
     # print(f'{max_time=} {dist_to_beat=}')
     print()
     with alive_bar(max_time-1) as bar:
-        for hold in range(1, max_time):
+
+        dists = []
+        for hold in times:
             speed = hold
             remain = max_time - hold
             dist = remain * speed
+            dists.append(dist)
             won = dist > dist_to_beat # greater than or equal?
             # print(f'{hold=} {remain=} {dist=} {won=}')
             if won:
-                max_times.append(hold)
+                # max_times.append(hold)
+                wins += 1
             bar()
-    result = len(max_times)
+    plt.plot(times, dists, linestyle='-')
+    plt.xlabel('Hold time (ms)')
+    plt.ylabel('Distance (mm)')
+    plt.axhline(y=dist_to_beat, color='r', linestyle='--', label='Distance to beat')
+    plt.show()
+    # result = len(max_times)
     # print(f'{result=}')
-    return result
+    return wins
 
 
 def solve_a(input):
@@ -53,10 +65,16 @@ def calc_b(input):
 
 
 def solve_b(input):
-    result = 0
-    for line in input.split('\n'):
-        result += calc_b(line)
-    return result
+    lines = input.split('\n')
+    for line in lines:
+        split = line.replace(' ', '').split(':')
+        if split[0] == 'Time':
+            time = int(split[1])
+        elif split[0] == 'Distance':
+            dist = int(split[1])
+    # print(f'{time=} {dist=}')
+    wins = calc_a(max_time=time, dist_to_beat=dist)
+    return wins
 
 
 def main():
@@ -64,15 +82,16 @@ def main():
     year = get_day_and_year()[1]
     p = Puzzle(day=day, year=year)
 
+    result_a = solve_a(data)
+    print(f'Answer A: {result_a}')
     if not p.answered_a:
-        result_a = solve_a(data)
-        print(f'Answer A: {result_a}')
         p.answer_a = result_a
 
-    if not p.answered_b:
+    if p.answered_a:
         result_b = solve_b(data)
         print(f'Answer B: {result_b}')
-        p.answer_b = result_b
+        if not p.answered_b:
+            p.answer_b = result_b
 
 
 if __name__ == '__main__':
