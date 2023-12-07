@@ -3,3 +3,4 @@ pytest
 regex
 alive-progress
 matplotlib
+numpy
