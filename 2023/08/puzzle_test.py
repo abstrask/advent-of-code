@@ -43,7 +43,7 @@ if test_b:
 
 # Solution tests
 
-solve_a_testdata = [
+example_a = [
     ('''RL
 
 AAA = (BBB, CCC)
@@ -59,7 +59,7 @@ AAA = (BBB, BBB)
 BBB = (AAA, ZZZ)
 ZZZ = (ZZZ, ZZZ)''', 6),
 ]
-@pytest.mark.parametrize('test_input,expected', solve_a_testdata)
+@pytest.mark.parametrize('test_input,expected', example_a)
 def test_solve_a(test_input, expected):
     assert solve_a(test_input) == expected
 
@@ -75,23 +75,30 @@ if p.answered_a:
 
     # Intermediate tests
 
-    calc_b_testdata = [
-        ('0', 0)
-    ]
-    @pytest.mark.parametrize('test_input,expected', calc_b_testdata)
-    def test_calc_b(test_input, expected):
-        assert calc_b(test_input) == expected
+    # calc_b_testdata = [
+    #     ('0', 0)
+    # ]
+    # @pytest.mark.parametrize('test_input,expected', calc_b_testdata)
+    # def test_calc_b(test_input, expected):
+    #     assert calc_b(test_input) == expected
 
 
     # Solution tests
 
-    @pytest.mark.parametrize('test_input,expected', test_b, ids=["example"])
-    def test_solve_b(test_input, expected):
-        assert str(solve_b(test_input)) == expected
+    # @pytest.mark.parametrize('test_input,expected', test_b, ids=["example"])
+    # def test_solve_b(test_input, expected):
+    #     assert str(solve_b(test_input)) == expected
 
     # EXAMPLE NOT UPDATED!
-    # example_b = """0
-    # 0
-    # 0"""
-    # def test_solve_b():
-    #     assert solve_b(example_b) == 0
+    example_b = """LR
+
+11A = (11B, XXX)
+11B = (XXX, 11Z)
+11Z = (11B, XXX)
+22A = (22B, XXX)
+22B = (22C, 22C)
+22C = (22Z, 22Z)
+22Z = (22B, 22B)
+XXX = (XXX, XXX)"""
+    def test_solve_b():
+        assert solve_b(example_b) == 6
