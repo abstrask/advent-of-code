@@ -11,7 +11,7 @@ def calc_a(input):
 
 def solve_a(input):
     result = 0
-    for line in input.split('\n'):
+    for line in input.splitlines():
         result += calc_a(line)
     return result
 
@@ -23,7 +23,7 @@ def calc_b(input):
 
 def solve_b(input):
     result = 0
-    for line in input.split('\n'):
+    for line in input.splitlines():
         result += calc_b(line)
     return result
 
