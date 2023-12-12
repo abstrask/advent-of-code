@@ -133,3 +133,8 @@ At this point, you should [return to your Advent calendar](/2023) and try anothe
 If you still want to see it, you can [get your puzzle input](11/input).
 
 You can also [Shareon [Twitter](https://twitter.com/intent/tweet?text=I%27ve+completed+%22Cosmic+Expansion%22+%2D+Day+11+%2D+Advent+of+Code+2023&url=https%3A%2F%2Fadventofcode%2Ecom%2F2023%2Fday%2F11&related=ericwastl&hashtags=AdventOfCode) [Mastodon](javascript:void(0);)] this puzzle.
+
+
+\--- Concepts ---
+----------
+- [Manhattan distance/Taxicab geometry](https://en.wikipedia.org/wiki/Taxicab_geometry)
