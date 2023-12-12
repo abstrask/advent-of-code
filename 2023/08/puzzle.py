@@ -84,15 +84,16 @@ def solve_b(input):
     pos = {}
     for p in [k for k in nodes.keys() if k[-1] == char]:
         pos[p] = p
-    # print(f'{pos=}')
+    print(f'{pos=}')
 
     print()
     step = 1
     periods = {}
     while True:
         op = ops[(step-1) % len(ops)]
-        # if step >= 20:
-        #     break
+
+        if step % 1000 == 0:
+            print(f'{periods=}')
 
         # All periods found?
         if len(periods) == len(pos):
@@ -104,12 +105,12 @@ def solve_b(input):
                 continue
             pos_tuple = nodes[p] # Look up tuple for last position in dict
             next_pos = pos_tuple[op]
-            print(f'{step=} {op=} {pos=} {next_pos=}')
+            # print(f'{step=} {op=} {pos=} {next_pos=}')
             if next_pos[-1] == 'Z':
             # if next_pos == k:
+                print(f'{k=} {step=}')
                 periods[k] = step
-            else:
-                pos[k] = next_pos
+            pos[k] = next_pos
             # print(f'{pos=}')
 
         step += 1
