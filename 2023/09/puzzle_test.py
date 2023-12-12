@@ -44,9 +44,9 @@ def test_calc_a(test_input, expected):
 
 # Solution tests
 
-# @pytest.mark.parametrize('test_input,expected', test_a, ids=["example"])
-# def test_solve_a(test_input, expected):
-#     assert str(solve_a(test_input)) == expected
+@pytest.mark.parametrize('test_input,expected', test_a, ids=["example"])
+def test_solve_a(test_input, expected):
+    assert str(solve_a(test_input)) == expected
 
 
 # PART B
@@ -56,7 +56,9 @@ if p.answered_a:
     # Intermediate tests
 
     calc_b_testdata = [
-        ('0', 0)
+        ('0 3 6 9 12 15',    -3),
+        ('1 3 6 10 15 21',    0),
+        ('10 13 16 21 30 45', 5)
     ]
     @pytest.mark.parametrize('test_input,expected', calc_b_testdata)
     def test_calc_b(test_input, expected):
@@ -65,9 +67,8 @@ if p.answered_a:
 
     # Solution tests
 
-    @pytest.mark.parametrize('test_input,expected', test_b, ids=["example"])
-    def test_solve_b(test_input, expected):
-        assert str(solve_b(test_input)) == expected
+    def test_solve_b():
+        assert solve_b(test_a[0][0]) == 2
 
     # EXAMPLE NOT UPDATED!
     # example_b = """0

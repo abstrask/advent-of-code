@@ -5,19 +5,24 @@ from aocd.models import Puzzle
 import regex as re
 
 
-def rec_a(seq, last=[]):
+def recursive(seq, first=[], last=[]):
     diff = [seq[i+1] - v for i, v in enumerate(seq[:-1])]
-    # print(f'{seq=} {diff=} {last=}')
+    first.append(seq[0])
     last.append(seq[-1])
+    # print(f'{seq=} {diff=} {first=} {last=}')
     if not all(d == 0 for d in diff):
-        return rec_a(diff, last)
+        return recursive(diff, first, last)
     else:
-        return sum(last)
+        prev = 0
+        while len(first) > 0:
+            prev = first.pop() - prev
+        return (prev, sum(last))
 
 
 def calc_a(input):
     seq = [int(m) for m in re.findall(r'(-*\d+)', input)]
-    result = rec_a(seq, [])
+    # print()
+    result = recursive(seq, [], [])[1]
     return result
 
 
@@ -29,7 +34,9 @@ def solve_a(input):
 
 
 def calc_b(input):
-    result = None
+    seq = [int(m) for m in re.findall(r'(-*\d+)', input)]
+    # print()
+    result = recursive(seq, [], [])[0]
     return result
 
 
