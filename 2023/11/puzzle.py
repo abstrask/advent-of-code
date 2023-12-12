@@ -8,10 +8,6 @@ import itertools
 
 
 def calc_a(input):
-    result = None
-    return result
-
-def get_galaxies(input: str):
     # Convert multi-line string to regular array, then NP array
     ary = []
     for line in input.splitlines():
@@ -59,29 +55,71 @@ def get_galaxies(input: str):
 
 def solve_a(input):
     dist = 0
-    gal = get_galaxies(input)
+    gal = calc_a(input)
     combo = itertools.combinations(gal.keys(), 2)
-
     # print(f'{gal=}')
     for c in combo:
-        x = [gal[g][0] for g in c] # galaxies' x-coordinates
-        y = [gal[g][1] for g in c] # galaxies' y-coordinates
-        d = max(x) - min(x) + max(y) - min(y) # distance is the difference between x and y coordinates, respectively
+        rows = [gal[g][0] for g in c] # galaxy rows
+        cols = [gal[g][1] for g in c] # galaxy columns
+        d = max(rows) - min(rows) + max(cols) - min(cols)
         dist += d
         # print(f'{c=} {x=} {y=} {d=}')
     return dist
 
 
 def calc_b(input):
-    result = None
-    return result
+    ary = []
+    for line in input.splitlines():
+        ary.append(list(line))
+    a = np.array(ary)
+    (rows, cols) = a.shape
 
+    # Find empty space
+    r_empty = []
+    for i in range(rows):
+        c = collections.Counter(a[i])
+        if '.' in c and len(c) == 1: # empty space?
+            r_empty.append(i)
+    c_empty = []
+    for i in range(cols):
+        c = collections.Counter(a[:, i])
+        if '.' in c and len(c) == 1: # empty space?
+            c_empty.append(i)
+    # print(f'{r_empty=} {c_empty=}')
 
-def solve_b(input):
-    result = 0
-    for line in input.split('\n'):
-        result += calc_b(line)
-    return result
+    # Spot galaxies
+    gal = {}
+    for r in range(rows):
+        for c in range(cols):
+            if a[r, c] == '#':
+                gal_no = len(gal)+1
+                gal[gal_no] = (r, c)
+    # print(f'{gal=}')
+    return (gal, r_empty, c_empty)
+
+def solve_b(input, penalty=1000000):
+    dist = 0
+    (gal, r_empty, c_empty) = calc_b(input)
+    print(f'{r_empty=} {c_empty=}')
+    combo = itertools.combinations(gal.keys(), 2)
+
+    p = penalty -1 # empty space penalty
+    for c in combo:
+        row_bounds = [gal[g][0] for g in c] # galaxy rows
+        col_bounds = [gal[g][1] for g in c] # galaxy columns
+        rows = set(range(min(row_bounds), max(row_bounds))) # rows between galaxies
+        cols = set(range(min(col_bounds), max(col_bounds))) # cols between galaxies
+        d = len(rows) + len(cols)
+        if p > 0:
+            row_empty = len(rows.intersection(r_empty))
+            col_empty = len(cols.intersection(c_empty))
+            ep = (row_empty + col_empty) * p
+        else:
+            ep = 0
+        dist += d + ep
+        # print(f'{c=} {row_bounds=} {col_bounds=} {d=} {row_empty=} {col_empty=} {ep=}')
+
+    return dist
 
 
 def main():

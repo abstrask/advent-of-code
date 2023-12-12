@@ -1,5 +1,5 @@
 import pytest
-from puzzle import solve_a, calc_b, solve_b, get_galaxies
+from puzzle import calc_a, solve_a, calc_b, solve_b
 from aocd import get_day_and_year
 from aocd.models import Puzzle
 
@@ -29,24 +29,20 @@ if test_b:
 
 
 
-# PART A
-
 expected_galaxies = {1: (0, 4), 2: (1, 9), 3: (2, 0), 4: (5, 8), 5: (6, 1), 6: (7, 12), 7: (10, 9), 8: (11, 0), 9: (11, 5)}
+
+
+# PART A
 
 # Intermediate tests
 
-@pytest.mark.parametrize('test_input,expected', test_a, ids=['galaxies'])
-def test_get_galaxies(test_input, expected):
-    assert get_galaxies(test_input) == expected_galaxies
+# @pytest.mark.parametrize('test_input,expected', test_a, ids=['galaxies'])
+# def test_get_galaxies(test_input, expected):
+#     assert get_galaxies(test_input) == expected_galaxies
 
 
-
-# calc_a_testdata = [
-#     ('0', 0)
-# ]
-# @pytest.mark.parametrize('test_input,expected', calc_a_testdata)
-# def test_calc_a(test_input, expected):
-#     assert calc_a(test_input) == expected
+def test_calc_a():
+    assert calc_a(test_a[0][0]) == expected_galaxies
 
 
 # Solution tests
@@ -62,19 +58,27 @@ if p.answered_a:
 
     # Intermediate tests
 
-    calc_b_testdata = [
-        ('0', 0)
-    ]
-    @pytest.mark.parametrize('test_input,expected', calc_b_testdata)
-    def test_calc_b(test_input, expected):
-        assert calc_b(test_input) == expected
+    # calc_b_testdata = [
+    #     ('0', 0)
+    # ]
+    # @pytest.mark.parametrize('test_input,expected', calc_b_testdata)
+    # def test_calc_b(test_input, expected):
+    #     assert calc_b(test_input) == expected
+
+    # def test_calc_b():
+    #     assert calc_b(test_a[0][0]) == expected_galaxies
 
 
     # Solution tests
 
-    @pytest.mark.parametrize('test_input,expected', test_b, ids=["example"])
-    def test_solve_b(test_input, expected):
-        assert str(solve_b(test_input)) == expected
+    solve_b_testdata = [
+        (2, 374),
+        (10, 1030),
+        (100, 8410)
+    ]
+    @pytest.mark.parametrize('penalty,expected', solve_b_testdata)
+    def test_solve_b(penalty, expected):
+        assert solve_b(test_a[0][0], penalty) == expected
 
     # EXAMPLE NOT UPDATED!
     # example_b = """0
